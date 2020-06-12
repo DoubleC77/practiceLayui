@@ -1,4 +1,4 @@
-package com.fchan.layui.controller.service;
+package com.fchan.layui.service;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;

@@ -1,4 +1,4 @@
-package com.fchan.layui.controller.viewResolve;
+package com.fchan.layui.viewResolve;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

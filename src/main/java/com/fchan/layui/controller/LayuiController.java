@@ -1,6 +1,6 @@
-package com.fchan.layui.controller.controller;
+package com.fchan.layui.controller;
 
-import com.fchan.layui.controller.service.LayuiService;
+import com.fchan.layui.service.LayuiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
