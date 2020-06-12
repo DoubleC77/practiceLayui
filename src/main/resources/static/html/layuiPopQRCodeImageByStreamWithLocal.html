@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/layui/css/layui.css">
+    <script src="/layui/layui.js"></script>
+</head>
+<body>
+    <div class="site-demo-button" id="layerDemo" style="margin-bottom: 0;">
+        <button data-method="confirmTrans" class="layui-btn">二维码弹框</button>
+    </div>
+    <script>
+        layui.use(['layer'],function(){
+            var $ = layui.jquery
+                ,layer = layui.layer;
+
+            $('#layerDemo .layui-btn').on('click', function(){
+                var shipmentId = 1209;
+                var html = "<img src='http://127.0.0.1:9002/layui/popQrCode'/>"
+                layer.open({
+                    type: 1
+                    ,title: ['is test','text-align: center;']
+                    ,closeBtn: false
+                    ,offset: 'auto'
+                    ,id: shipmentId //防止重复弹出
+                    ,content: html
+                    ,btn: '关闭全部'
+                    ,btnAlign: 'c' //按钮居中
+                    ,shade: 0 //不显示遮罩
+                    ,yes: function(){
+                        layer.closeAll();
+                    }
+                });
+
+            });
+        })
+    </script>
+</body>
+</html>
