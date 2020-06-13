@@ -28,9 +28,12 @@ public class LayuiService {
         ServletOutputStream outputStream = null;
         try {
             File file = ResourceUtils.getFile("classpath:static/image/myHuckleberryFriend.jpg");
-            BufferedImage bufferedImage = ImageIO.read(file);
+            BufferedImage bufferedImage = ImageIO.read(file);   //这里读出来的图片大小是和原来一样大的
+
+            BufferedImage bufferedImageNew = new BufferedImage(300,300,BufferedImage.TYPE_INT_RGB);
+            bufferedImageNew.getGraphics().drawImage(bufferedImage,0,0,300,300,null);
             outputStream = response.getOutputStream();
-            ImageIO.write(bufferedImage,"jpg",outputStream);
+            ImageIO.write(bufferedImageNew,"jpg",outputStream);
             return file.getName();
         } catch (FileNotFoundException e) {
             e.printStackTrace();

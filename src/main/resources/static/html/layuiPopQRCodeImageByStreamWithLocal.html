@@ -18,11 +18,12 @@
             $('#layerDemo .layui-btn').on('click', function(){
                 var shipmentId = 1209;
                 var html = "<img src='http://127.0.0.1:9002/layui/popQrCode'/>"
+                var title = ['is test','font-size:50px;text-align: center;']
                 layer.open({
                     type: 1
-                    ,title: ['is test','text-align: center;']
+                    ,title: title
                     ,closeBtn: false
-                    ,offset: 'auto'
+                    ,offset: 't'
                     ,id: shipmentId //防止重复弹出
                     ,content: html
                     ,btn: '关闭全部'
