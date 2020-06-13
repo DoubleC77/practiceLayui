@@ -32,6 +32,12 @@ public class LayuiService {
 
             BufferedImage bufferedImageNew = new BufferedImage(300,300,BufferedImage.TYPE_INT_RGB);
             bufferedImageNew.getGraphics().drawImage(bufferedImage,0,0,300,300,null);
+
+            //返回给前端的图片肯定是要最新的,不能有缓存
+            response.setHeader("Cache-Control","no-store");
+            response.setHeader("Pragma","no-cache");
+            response.setDateHeader("Expires",0);
+            response.setContentType("image/jpg");
             outputStream = response.getOutputStream();
             ImageIO.write(bufferedImageNew,"jpg",outputStream);
             return file.getName();
@@ -64,6 +70,12 @@ public class LayuiService {
             //高度和宽度都是以像素为单位
             //一般content都是url,扫描后可以自动跳转到指定的地址
             bitMatrix = new MultiFormatWriter().encode(content, BarcodeFormat.QR_CODE,width,height,hints);
+
+            //返回给前端的图片肯定是要最新的,不能有缓存
+            response.setHeader("Cache-Control","no-store");
+            response.setHeader("Pragma","no-cache");
+            response.setDateHeader("Expires",0);
+            response.setContentType("image/jpg");
             outputStream = response.getOutputStream();
             MatrixToImageWriter.writeToStream(bitMatrix,"jpg",outputStream);
             return "success";
