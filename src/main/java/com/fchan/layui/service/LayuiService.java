@@ -17,8 +17,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class LayuiService {
@@ -95,6 +98,30 @@ public class LayuiService {
                 }
             }
         }
+    }
+
+
+    public static void main(String [] args){
+        List<Map<String,Object>> params = new ArrayList<>();
+        Map<String,Object> temp = new HashMap<>();
+        temp.put("id",1);
+        temp.put("name","qq");
+        temp.put("height","180");
+        params.add(temp);
+        temp = new HashMap<>();
+        temp.put("id",1);
+        temp.put("name","www");
+        temp.put("height","111");
+        params.add(temp);
+        temp = new HashMap<>();
+        temp.put("id",2);
+        temp.put("name","eee");
+        temp.put("height","222");
+        params.add(temp);
+
+        Map groupBy = params.stream().collect(Collectors.groupingBy(it->it.get("id")));
+        System.out.println(groupBy);
+
     }
 
 

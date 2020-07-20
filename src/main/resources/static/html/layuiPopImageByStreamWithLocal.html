@@ -26,7 +26,6 @@
                     ,offset: ['100px','250px']       //可以手动设置上,左边距 'auto'默认是垂直水平居中
                     ,id: shipmentId                 //防止重复弹出,可以认为是弹框的id
                     ,content: html
-                    ,btn: ['关闭全部','测试按钮']     //可以以定义更多按钮，比如：btn: ['按钮1', '按钮2', '按钮3', …]按钮1的回调是yes，而从按钮2开始，则回调为btn2: function(){}，以此类推
                     ,anim: 6                        //弹窗出现的时候的动画抖动
                     ,btnAlign: 'c'                  //按钮居中
                     ,shade: 0.8                     //0表示不显示遮罩,也可以显示其他颜色的遮罩背景色[0.8, '#393D49']
@@ -39,11 +38,14 @@
                     }*/
                     // ,maxWidth: 300               //只有当area: 'auto'时，maxWidth的设定才有效。
                     // ,maxHeight: 300              //只有当area: 'auto'时，maxWidth的设定才有效。
-                    ,yes: function(){               //默认的第一个按钮的回调
-                        layer.closeAll();
+                    ,btn: ['关闭全部','测试按钮']     //可以以定义更多按钮，比如：btn: ['按钮1', '按钮2', '按钮3', …]按钮1的回调是yes，而从按钮2开始，则回调为btn2: function(){}，以此类推
+                                                    //按钮要紧跟方法,不然下面的index和layero会错乱
+                    ,yes: function(index,layero){               //默认的第一个按钮的回调
+                        layer.close(index);
                     }
-                    ,btn2: function () {            //第二个按钮的回调btn2,第三个就是btn3以此类推
+                    ,btn2: function (index,layero) {            //第二个按钮的回调btn2,第三个就是btn3以此类推
                         console.log("test");
+                        layer.close(index);
                         return false;               //在按钮回调最后return false代表阻止弹框关闭
                     }
                 });
