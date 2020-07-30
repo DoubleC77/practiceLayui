@@ -10,11 +10,52 @@
     <div class="site-demo-button" id="layerDemo" style="margin-bottom: 0;">
         <button data-method="confirmTrans" class="layui-btn">配置一个透明的询问框</button>
     </div>
+    <!--<script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+    <script language="JavaScript">
+        alert(JSON.stringify(returnCitySN));
+    </script>-->
+    <div id="getIp1" >
+        <button data-method="confirmTrans" class="layui-btn">获取ip方式1</button>
+    </div>
+    <div id="getIp2">
+        <button data-method="confirmTrans" class="layui-btn">获取ip方式2</button>
+    </div>
     <script>
         layui.use(['layer'],function(){
             var $ = layui.jquery
                 ,layer = layui.layer;
-
+            $('#getIp2 .layui-btn').on('click', function(){
+                $.ajax({
+                    type:"POST",
+                    dataType:"json",
+                    contentType:"application/json",
+                    url: "/layui/testArray",
+                    data: JSON.stringify([11,22,33,44,55,66]),
+                    success: function (res) {
+                        //console.log(res)
+                        layer.msg(JSON.stringify(res));
+                    },
+                    error: function (error) {
+                        //console.log(error)
+                        layer.msg(JSON.stringify(error));
+                    }
+                });
+            });
+            $('#getIp1 .layui-btn').on('click', function(){
+                $.ajax({
+                    type:"POST",
+                    dataType:"json",
+                    contentType:"application/json",
+                    url: "/layui/testGetIp",
+                    data: JSON.stringify([11,22,33,44,55,66]),
+                    success: function (res) {
+                        layer.msg(JSON.stringify(res));
+                    },
+                    error: function (error) {
+                        layer.msg(JSON.stringify(error));
+                    }
+                });
+            });
             $('#layerDemo .layui-btn').on('click', function(){
                 //这个utl中只需要把图片流输入到HttpServletResponse输出流中即可
                 /*
