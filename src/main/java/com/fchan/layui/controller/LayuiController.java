@@ -3,6 +3,7 @@ package com.fchan.layui.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fchan.layui.service.LayuiService;
+import com.fchan.layui.service.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -128,6 +129,16 @@ public class LayuiController {
         }};
         ObjectMapper objectMapper = new ObjectMapper();
         return  objectMapper.writeValueAsString(result);
+    }
+
+    @GetMapping("testJacksonLocalDateTime")
+    String testJacksonLocalDateTime() throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        Map map = new HashMap();
+        map.put("time","2020-08-08 12:12:12");
+        Test test = mapper.readValue(mapper.writeValueAsString(map),Test.class);
+        System.out.println(test);
+        return test.toString();
     }
 
 }
