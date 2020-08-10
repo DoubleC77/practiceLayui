@@ -1,17 +1,25 @@
 package com.fchan.layui.controller;
 
+import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.ExcelReader;
+import com.alibaba.excel.read.metadata.ReadSheet;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fchan.layui.entity.EasyExcelTest;
+import com.fchan.layui.listener.EasyExcelListener;
 import com.fchan.layui.service.LayuiService;
 import com.fchan.layui.service.Test;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.HashMap;
@@ -20,6 +28,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("layui")
+@Slf4j
 public class LayuiController {
 
     @Autowired
@@ -139,6 +148,25 @@ public class LayuiController {
         Test test = mapper.readValue(mapper.writeValueAsString(map),Test.class);
         System.out.println(test);
         return test.toString();
+    }
+
+    @PostMapping("testEasyExcel")
+    @ResponseBody
+    String testEasyExcel(@RequestParam("excel")MultipartFile excel) throws IOException {
+        //这个EasyExcelListener里已经写入了监听保存的操作,所以外面不需要自己再处理了,.sheet()默认读取第一个sheet
+        //EasyExcel.read(excel.getInputStream(), EasyExcelTest.class, new EasyExcelListener()).sheet().doRead();
+        //doReadAll()读取所有的sheet
+        //EasyExcel.read(excel.getInputStream(), EasyExcelTest.class, new EasyExcelListener()).doReadAll();
+
+        ExcelReader excelReader = null;
+
+        excelReader = EasyExcel.read(excel.getInputStream()).build();
+        //这里的 0 和 1是excel中sheet从左到右的index
+        ReadSheet sheet1 = EasyExcel.readSheet(0).head(EasyExcelTest.class).registerReadListener(new EasyExcelListener()).build();
+        ReadSheet sheet2 = EasyExcel.readSheet(1).head(EasyExcelTest.class).registerReadListener(new EasyExcelListener()).build();
+
+        excelReader.read(sheet1,sheet2);
+        return "success";
     }
 
 }
