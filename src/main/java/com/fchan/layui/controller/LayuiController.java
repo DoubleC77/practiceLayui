@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fchan.layui.entity.EasyExcelTest;
 import com.fchan.layui.listener.EasyExcelListener;
+import com.fchan.layui.quzrtzForSpring.dynamicQuartz.DynamicScheduledTask;
 import com.fchan.layui.service.LayuiService;
 import com.fchan.layui.service.Test;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +36,17 @@ public class LayuiController {
     @Autowired
     @Qualifier("layuiService")
     private LayuiService layuiService;
+
+    @Autowired
+    private DynamicScheduledTask dynamicScheduledTask;
+
+
+    @PostMapping("setCron")
+    @ResponseBody
+    public String setCron(@RequestParam("cron") String cronStr){
+        dynamicScheduledTask.setCron(cronStr);
+        return "success";
+    }
 
 
 
