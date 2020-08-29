@@ -3,11 +3,25 @@ package com.fchan.layui.entity;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.format.DateTimeFormat;
 import com.alibaba.excel.annotation.format.NumberFormat;
+import com.fchan.layui.service.Test;
 import lombok.Data;
-import java.io.Serializable;
+import org.apache.commons.codec.binary.StringUtils;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.*;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+@Component
 @Data
-public class EasyExcelTest implements Serializable {
+public class EasyExcelTest implements Serializable{
     private static final long serialVersionUID = 8362987561243233425L;
 
     //@ExcelProperty(value ="类型",index = 0)     //文档中建议只用 index 或者只用 value 不要混用
@@ -34,5 +48,8 @@ public class EasyExcelTest implements Serializable {
     @ExcelProperty(index =5)
     @NumberFormat("#.##%")          //将接收的数字在读取转成这个 entity的status属性的值的时候转成百分比格式
     private String descr;
+
+    private String beanName;
+
 
 }

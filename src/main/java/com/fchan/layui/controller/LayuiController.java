@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,9 @@ public class LayuiController {
     @Autowired
     @Qualifier("layuiService")
     private LayuiService layuiService;
+
+
+
 
     @GetMapping("popQrCode")
     String popQrCode(HttpServletResponse response){
@@ -164,7 +168,7 @@ public class LayuiController {
         //这里的 0 和 1是excel中sheet从左到右的index
         ReadSheet sheet1 = EasyExcel.readSheet(0).head(EasyExcelTest.class).registerReadListener(new EasyExcelListener()).build();
         ReadSheet sheet2 = EasyExcel.readSheet(1).head(EasyExcelTest.class).registerReadListener(new EasyExcelListener()).build();
-
+        DecimalFormat decimalFormat;
         excelReader.read(sheet1,sheet2);
         return "success";
     }
