@@ -27,19 +27,13 @@ public class DynamicScheduledTask implements SchedulingConfigurer {
     @Override
     public void configureTasks(ScheduledTaskRegistrar scheduledTaskRegistrar) {
 
-        scheduledTaskRegistrar.addTriggerTask(new Runnable() {
-            @Override
-            public void run() {
+        scheduledTaskRegistrar.addTriggerTask(()-> {
                 //定时任务的逻辑
                 testJobDetailService.doJob();
-            }
-        }, new Trigger() {
-            @Override
-            public Date nextExecutionTime(TriggerContext triggerContext) {
-                CronTrigger cronTrigger = new CronTrigger(cron);
-                Date nextExecutionTime = cronTrigger.nextExecutionTime(triggerContext);
-                return nextExecutionTime;
-            }
+        },(TriggerContext triggerContext) -> {
+            CronTrigger cronTrigger = new CronTrigger(cron);
+            Date nextExecutionTime = cronTrigger.nextExecutionTime(triggerContext);
+            return nextExecutionTime;
         });
         this.scheduledTaskRegistrar = scheduledTaskRegistrar;
     }
@@ -48,6 +42,11 @@ public class DynamicScheduledTask implements SchedulingConfigurer {
         if(null != this.scheduledTaskRegistrar){
             this.scheduledTaskRegistrar.destroy();
         }
+    }
+
+
+    public void deleteTrigger(TriggerTask triggerTask){
+        this.scheduledTaskRegistrar.getTriggerTaskList().remove(triggerTask);
     }
 
 

@@ -3,12 +3,14 @@ package com.fchan.layui;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fchan.layui.aspect.CurrentUserHolder;
 import com.fchan.layui.entity.AopTestEntity;
+import com.fchan.layui.represent.service.CglibDemoInterceptor;
 import com.fchan.layui.represent.service.JdkProxySubject;
 import com.fchan.layui.represent.service.Subject;
 import com.fchan.layui.represent.service.impl.Proxy;
 import com.fchan.layui.represent.service.impl.RealSubject;
 import com.fchan.layui.service.SpringAopTestService;
 import lombok.extern.slf4j.Slf4j;
+import net.sf.cglib.proxy.Enhancer;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -144,6 +146,19 @@ class LayuiApplicationTests {
 		realSubject.getClass().getInterfaces();
 		Subject subject = (Subject) java.lang.reflect.Proxy.newProxyInstance(this.getClass().getClassLoader()
 				,new Class[]{Subject.class},new JdkProxySubject(new RealSubject()));
+		subject.print();
+	}
+
+
+	@Test
+	public void testCglibProxy(){
+
+		Enhancer enhancer = new Enhancer();
+		//设置父类
+		enhancer.setSuperclass(RealSubject.class);
+		//具体代理的实现了MethodInterceptor接口的子类
+		enhancer.setCallback(new CglibDemoInterceptor());
+		Subject subject = (Subject) enhancer.create();
 		subject.print();
 	}
 
