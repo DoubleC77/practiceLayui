@@ -21,9 +21,12 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
+import java.net.URLEncoder;
 import java.net.UnknownHostException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -184,5 +187,30 @@ public class LayuiController {
         excelReader.read(sheet1,sheet2);
         return "success";
     }
+
+
+    @GetMapping("downExcel")
+    @ResponseBody
+    public void downExcel(HttpServletResponse response) throws IOException {
+        // 这里注意 有同学反应使用swagger 会导致各种问题，请直接用浏览器或者用postman
+        response.setContentType("application/vnd.ms-excel");
+        response.setCharacterEncoding("utf-8");
+        // 这里URLEncoder.encode可以防止中文乱码 当然和easyexcel没有关系
+        String fileName = URLEncoder.encode("测试", "UTF-8");
+        response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
+        EasyExcel.write(response.getOutputStream(), EasyExcelTest.class).sheet("模板").doWrite(data());
+    }
+
+
+    public List<EasyExcelTest> data(){
+        List<EasyExcelTest> list = new ArrayList(){{
+            add(new EasyExcelTest("11","11","11","11",11,"11","11"));
+            add(new EasyExcelTest("22","22","22","22",22,"22","22"));
+            add(new EasyExcelTest("33","33","33","33",33,"33","33"));
+        }};
+
+        return list;
+    }
+
 
 }
