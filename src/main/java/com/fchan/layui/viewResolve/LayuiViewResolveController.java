@@ -9,25 +9,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class LayuiViewResolveController {
 
     @GetMapping("popImageByStream")
-    String popImageByStream(){
+    String popImageByStream() {
         return "html/layuiPopImageByStream";
     }
 
     /**
      * 普通图片
+     *
      * @return
      */
     @GetMapping("layuiPopImageByStreamWithLocal")
-    String layuiPopImageByStreamWithLocal(){
+    String layuiPopImageByStreamWithLocal() {
         return "html/layuiPopImageByStreamWithLocal";
     }
 
     /**
      * 二维码
+     *
      * @return
      */
     @GetMapping("layuiPopQRCodeImageByStreamWithLocal")
-    String layuiPopQRCodeImageByStreamWithLocal(){
+    String layuiPopQRCodeImageByStreamWithLocal() {
         return "html/layuiPopQRCodeImageByStreamWithLocal";
     }
 

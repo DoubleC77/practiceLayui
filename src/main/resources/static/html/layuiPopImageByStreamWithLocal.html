@@ -7,51 +7,51 @@
     <script src="/layui/layui.js"></script>
 </head>
 <body>
-    <div class="site-demo-button" id="layerDemo" style="margin-bottom: 0;">
-        <button data-method="confirmTrans" class="layui-btn">图片弹框</button>
-    </div>
-    <script>
-        layui.use(['layer'],function(){
-            var $ = layui.jquery
-                ,layer = layui.layer;
+<div class="site-demo-button" id="layerDemo" style="margin-bottom: 0;">
+    <button data-method="confirmTrans" class="layui-btn">图片弹框</button>
+</div>
+<script>
+    layui.use(['layer'], function () {
+        var $ = layui.jquery
+            , layer = layui.layer;
 
-            $('#layerDemo .layui-btn').on('click', function(){
-                var shipmentId = 1209;
-                var html = "<div style='padding: 50px; line-height: 22px;text-align: center;'><span>is test</span><br><img src='http://127.0.0.1:9002/layui/popImg'/></div>"
-                layer.open({
-                    type: 1
-                    ,title: false                   //如果你不想显示标题栏，你可以title: false,类型：String/DOM/Array，默认：''title支持三种类型的值，若你传入的是普通的字符串，如title :'我是标题'，那么只会改变标题文本；若你还需要自定义标题区域样式，那么你可以title: ['文本', 'font-size:18px;']，数组第二项可以写任意css样式；
-                    ,closeBtn: false
-                    ,area: 'auto'                   //设置宽高,类型：String/Array，默认：'auto',在默认状态下，layer是宽高都自适应的，但当你只想定义宽度时，你可以area: '500px'，高度仍然是自适应的。当你宽高都要定义时，你可以area: ['500px', '300px']
-                    ,offset: ['100px','250px']       //可以手动设置上,左边距 'auto'默认是垂直水平居中
-                    ,id: shipmentId                 //防止重复弹出,可以认为是弹框的id
-                    ,content: html
-                    ,anim: 6                        //弹窗出现的时候的动画抖动
-                    ,btnAlign: 'c'                  //按钮居中
-                    ,shade: 0.8                     //0表示不显示遮罩,也可以显示其他颜色的遮罩背景色[0.8, '#393D49']
-                    ,isOutAnim: true                //关闭的时候有一个平滑缩小关闭的动画,默认false
-                    ,maxmin: false                   //该参数值对type:1和type:2有效。默认不显示最大小化按钮。需要显示配置maxmin: true即可
-                    ,fixed: true                    //即鼠标滚动时，层是否固定在可视区域。如果不想，设置fixed: false即可
-                    ,resize: true                   //默认：true,默认情况下，你可以在弹层右下角拖动来拉伸尺寸。如果对指定的弹层屏蔽该功能，设置 false即可。该参数对loading、tips层无效
-                   /* ,resizing: function(layero){    //监听窗口拉伸动作,回调返回一个参数：当前层的DOM对象
-                        console.log(layero);        //在拉伸过程中会不断的调用这个事件,并不是默认一次的
-                    }*/
-                    // ,maxWidth: 300               //只有当area: 'auto'时，maxWidth的设定才有效。
-                    // ,maxHeight: 300              //只有当area: 'auto'时，maxWidth的设定才有效。
-                    ,btn: ['关闭全部','测试按钮']     //可以以定义更多按钮，比如：btn: ['按钮1', '按钮2', '按钮3', …]按钮1的回调是yes，而从按钮2开始，则回调为btn2: function(){}，以此类推
-                                                    //按钮要紧跟方法,不然下面的index和layero会错乱
-                    ,yes: function(index,layero){               //默认的第一个按钮的回调
-                        layer.close(index);
-                    }
-                    ,btn2: function (index,layero) {            //第二个按钮的回调btn2,第三个就是btn3以此类推
-                        console.log("test");
-                        layer.close(index);
-                        return false;               //在按钮回调最后returshaden false代表阻止弹框关闭
-                    }
-                });
-
+        $('#layerDemo .layui-btn').on('click', function () {
+            var shipmentId = 1209;
+            var html = "<div style='padding: 50px; line-height: 22px;text-align: center;'><span>is test</span><br><img src='http://127.0.0.1:9002/layui/popImg'/></div>"
+            layer.open({
+                type: 1
+                , title: false                   //如果你不想显示标题栏，你可以title: false,类型：String/DOM/Array，默认：''title支持三种类型的值，若你传入的是普通的字符串，如title :'我是标题'，那么只会改变标题文本；若你还需要自定义标题区域样式，那么你可以title: ['文本', 'font-size:18px;']，数组第二项可以写任意css样式；
+                , closeBtn: false
+                , area: 'auto'                   //设置宽高,类型：String/Array，默认：'auto',在默认状态下，layer是宽高都自适应的，但当你只想定义宽度时，你可以area: '500px'，高度仍然是自适应的。当你宽高都要定义时，你可以area: ['500px', '300px']
+                , offset: ['100px', '250px']       //可以手动设置上,左边距 'auto'默认是垂直水平居中
+                , id: shipmentId                 //防止重复弹出,可以认为是弹框的id
+                , content: html
+                , anim: 6                        //弹窗出现的时候的动画抖动
+                , btnAlign: 'c'                  //按钮居中
+                , shade: 0.8                     //0表示不显示遮罩,也可以显示其他颜色的遮罩背景色[0.8, '#393D49']
+                , isOutAnim: true                //关闭的时候有一个平滑缩小关闭的动画,默认false
+                , maxmin: false                   //该参数值对type:1和type:2有效。默认不显示最大小化按钮。需要显示配置maxmin: true即可
+                , fixed: true                    //即鼠标滚动时，层是否固定在可视区域。如果不想，设置fixed: false即可
+                , resize: true                   //默认：true,默认情况下，你可以在弹层右下角拖动来拉伸尺寸。如果对指定的弹层屏蔽该功能，设置 false即可。该参数对loading、tips层无效
+                /* ,resizing: function(layero){    //监听窗口拉伸动作,回调返回一个参数：当前层的DOM对象
+                     console.log(layero);        //在拉伸过程中会不断的调用这个事件,并不是默认一次的
+                 }*/
+                // ,maxWidth: 300               //只有当area: 'auto'时，maxWidth的设定才有效。
+                // ,maxHeight: 300              //只有当area: 'auto'时，maxWidth的设定才有效。
+                , btn: ['关闭全部', '测试按钮']     //可以以定义更多按钮，比如：btn: ['按钮1', '按钮2', '按钮3', …]按钮1的回调是yes，而从按钮2开始，则回调为btn2: function(){}，以此类推
+                //按钮要紧跟方法,不然下面的index和layero会错乱
+                , yes: function (index, layero) {               //默认的第一个按钮的回调
+                    layer.close(index);
+                }
+                , btn2: function (index, layero) {            //第二个按钮的回调btn2,第三个就是btn3以此类推
+                    console.log("test");
+                    layer.close(index);
+                    return false;               //在按钮回调最后returshaden false代表阻止弹框关闭
+                }
             });
-        })
-    </script>
+
+        });
+    })
+</script>
 </body>
 </html>

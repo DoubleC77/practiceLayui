@@ -7,37 +7,95 @@
     <script src="/layui/layui.js"></script>
 </head>
 <body>
-    <div class="site-demo-button" id="layerDemo" style="margin-bottom: 0;">
-        <button data-method="confirmTrans" class="layui-btn">二维码弹框</button>
-    </div>
-    <script>
-        layui.use(['layer'],function(){
-            var $ = layui.jquery
-                ,layer = layui.layer;
+<div class="site-demo-button" id="layerDemo" style="margin-bottom: 0;">
+    <button data-method="confirmTrans" class="layui-btn">二维码弹框</button>
+</div>
+<div class="site-demo-button" id="exportExcel" style="margin-bottom: 0;">
+    <button data-method="confirmTrans" class="layui-btn">导出excel</button>
+</div>
+<div style="width: 100%;">
+    <iframe id="mainIframe" name="mainIframe" src="http://www.baidu.com" frameborder="0" scrolling="auto"></iframe>
+</div>
+<button id="ajaxFormExport" data-method="confirmTrans" class="layui-btn">ajax用a标签导出excel</button>
+<script>
+    layui.use(['layer'], function () {
+        var $ = layui.jquery
+            , layer = layui.layer;
 
-            $('#layerDemo .layui-btn').on('click', function(){
-                var shipmentId = 1209;
-                var html = "<img src='http://127.0.0.1:9002/layui/popQrCode'/>";
+        var ifm = document.getElementById("mainIframe");
+        ifm.height = document.documentElement.clientHeight - 100;
+        ifm.width = document.documentElement.clientWidth - 100;
 
-                //title居中不了,可以放到下面的content中去像layuiPopImageByStreamWithLocal.html中就是放到了content中
-                var title = ['is test','font-size:50px;text-align: center;'];
-                layer.open({
-                    type: 1
-                    ,title: title
-                    ,closeBtn: false
-                    ,offset: 't'
-                    ,id: shipmentId //防止重复弹出
-                    ,content: html
-                    ,btn: '关闭全部'
-                    ,btnAlign: 'c' //按钮居中
-                    ,shade: 0 //不显示遮罩
-                    ,yes: function(){
-                        layer.closeAll();
-                    }
-                });
+
+        $('#layerDemo .layui-btn').on('click', function () {
+            var shipmentId = 1209;
+            var html = "<img src='http://127.0.0.1:9002/layui/popQrCode'/>";
+
+            //title居中不了,可以放到下面的content中去像layuiPopImageByStreamWithLocal.html中就是放到了content中
+            var title = ['is test', 'font-size:50px;text-align: center;'];
+            layer.open({
+                type: 1
+                , title: title
+                , closeBtn: false
+                , offset: 't'
+                , id: shipmentId //防止重复弹出
+                , content: html
+                , btn: '关闭全部'
+                , btnAlign: 'c' //按钮居中
+                , shade: 0 //不显示遮罩
+                , yes: function () {
+                    layer.closeAll();
+                }
+            });
+
+        });
+
+
+        $('#exportExcel .layui-btn').on('click', function () {
+            var form = $('<form>');
+            form.attr('style', 'display:none');
+            form.attr('target', '');
+            form.attr('method', 'post');
+            form.attr('action', '/layui/downExcel')
+
+            var inputContent = $('<input>');
+            inputContent.attr('type', 'hidden');
+            inputContent.attr('name', 'item');
+            inputContent.attr('value', 'test');
+
+            $('body').append(form);
+            form.append(inputContent);
+            form.submit();
+            form.remove();
+
+        });
+
+
+        $('#ajaxFormExport').on('click', function () {
+            $.ajax({
+                type: 'post',
+                dataType: 'json',
+                contentType: 'application/json',
+                url: '/layui/downForA',
+                data: JSON.stringify({aaa: 111}),
+                success: function (data) {
+                    console.log(data);
+
+                    var a = $('<a>');
+                    a.attr('href', data.filePath);
+                    a.attr('download', data.fileName);
+                    $('body').append(a);
+                    a[0].click();
+                    a.remove();
+                },
+                error: function (error) {
+                    console.log(error);
+                }
 
             });
-        })
-    </script>
+
+        });
+    })
+</script>
 </body>
 </html>

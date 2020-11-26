@@ -1,11 +1,12 @@
 package com.fchan.layui.chainsMethods.springaopChain;
 
+import java.net.InetAddress;
 import java.util.Arrays;
 import java.util.List;
 
 public class ChainClient {
 
-    static class ChainHandlerA extends ChainHandler{
+    static class ChainHandlerA extends ChainHandler {
 
         @Override
         protected void handlerProcess() {
@@ -13,7 +14,7 @@ public class ChainClient {
         }
     }
 
-    static class ChainHandlerB extends ChainHandler{
+    static class ChainHandlerB extends ChainHandler {
 
         @Override
         protected void handlerProcess() {
@@ -21,7 +22,7 @@ public class ChainClient {
         }
     }
 
-    static class ChainHandlerC extends ChainHandler{
+    static class ChainHandlerC extends ChainHandler {
 
         @Override
         protected void handlerProcess() {
@@ -30,7 +31,7 @@ public class ChainClient {
     }
 
     public static void main(String[] args) {
-        List<ChainHandler> list = Arrays.asList(
+        /*List<ChainHandler> list = Arrays.asList(
                 new ChainHandlerA(),
                 new ChainHandlerB(),
                 new ChainHandlerC()
@@ -39,7 +40,10 @@ public class ChainClient {
         chain.proceed();
         do{
             System.out.println(111);
-        }while (true);
+        }while (true);*/
+
+
+        System.out.println(1000 == 1000);
     }
 
 

@@ -20,11 +20,11 @@ public class Chain {
         this.chainHandlers = chainHandlers;
     }
 
-    protected void proceed(){
-        if(index >= this.getChainHandlers().size()){
+    protected void proceed() {
+        if (index >= this.getChainHandlers().size()) {
             return;
         }
-        this.getChainHandlers().get(index ++ ).execution(this);
+        this.getChainHandlers().get(index++).execution(this);
     }
 
 }

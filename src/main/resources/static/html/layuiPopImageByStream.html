@@ -7,94 +7,115 @@
     <script src="/layui/layui.js"></script>
 </head>
 <body>
-    <div class="site-demo-button" id="layerDemo" style="margin-bottom: 0;">
-        <button data-method="confirmTrans" class="layui-btn">配置一个透明的询问框</button>
-    </div>
-    <!--<script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
-    <script language="JavaScript">
-        alert(JSON.stringify(returnCitySN));
-    </script>-->
-    <div id="getIp1" >
-        <button data-method="confirmTrans" class="layui-btn">获取ip方式1</button>
-    </div>
-    <div id="getIp2">
-        <button data-method="confirmTrans" class="layui-btn">获取ip方式2</button>
-    </div>
-    <script>
-        layui.use(['layer'],function(){
-            var $ = layui.jquery
-                ,layer = layui.layer;
-            $('#getIp2 .layui-btn').on('click', function(){
-                $.ajax({
-                    type:"POST",
-                    dataType:"json",
-                    contentType:"application/json",
-                    url: "/layui/testArray",
-                    data: JSON.stringify([11,22,33,44,55,66]),
-                    success: function (res) {
-                        //console.log(res)
-                        layer.msg(JSON.stringify(res));
-                    },
-                    error: function (error) {
-                        //console.log(error)
-                        layer.msg(JSON.stringify(error));
-                    }
-                });
-            });
-            $('#getIp1 .layui-btn').on('click', function(){
-                $.ajax({
-                    type:"POST",
-                    dataType:"json",
-                    contentType:"application/json",
-                    url: "/layui/testGetIp",
-                    data: JSON.stringify([11,22,33,44,55,66]),
-                    success: function (res) {
-                        layer.msg(JSON.stringify(res));
-                    },
-                    error: function (error) {
-                        layer.msg(JSON.stringify(error));
-                    }
-                });
-            });
-            $('#layerDemo .layui-btn').on('click', function(){
-                //这个utl中只需要把图片流输入到HttpServletResponse输出流中即可
-                /*
-                    ServletOutputStream outputStream = null
-                    try{
-                        outputStream = response.getOutputStream()
-                            ||||||||业务代码
-                        //我这里场景是在生成二维码图片后把图片返回给前端，所以这里用了zxing javase的依赖包里的MatrixToImageWriter工具类
-                        //你可以用其他方式写到流中去
-                        MatrixToImageWriter.writeToStream(bitMatrix,picForm,outputStream)
-                    }catch (Throwable t) {
-                        ExceptionManager.logException(sess,t)
-                        return ResponseMessageFactory.error(sess,t.getMessage())
-                    }finally{
-                        if(outputStream){
-                            outputStream.flush()
-                            outputStream.close()
-                        }
-                    }
-                */
-                var shipmentId = 1209;
-                var html = "<img src='http://127.0.0.1:9001/api/qrcode/generateQRCode/" + shipmentId + "'/>"
-                layer.open({
-                    type: 1
-                    ,title: 'is test'
-                    ,closeBtn: false
-                    ,offset: 'auto'
-                    ,id: shipmentId //防止重复弹出
-                    ,content: html
-                    ,btn: '关闭全部'
-                    ,btnAlign: 'c' //按钮居中
-                    ,shade: 0 //不显示遮罩
-                    ,yes: function(){
-                        layer.closeAll();
-                    }
-                });
+<div class="site-demo-button" id="layerDemo" style="margin-bottom: 0;">
+    <button data-method="confirmTrans" class="layui-btn">配置一个透明的询问框</button>
+</div>
+<!--<script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+<script language="JavaScript">
+    alert(JSON.stringify(returnCitySN));
+</script>-->
+<iframe
+<div id="getIp1">
+    <button data-method="confirmTrans" class="layui-btn">获取ip方式1</button>
+</div>
+<div id="getIp2">
+    <button data-method="confirmTrans" class="layui-btn">获取ip方式2</button>
+</div>
+<div id="getPdf">
+    <button data-method="confirmTrans" class="layui-btn">预览pdf</button>
+</div>
+<script>
+    layui.use(['layer'], function () {
+        var $ = layui.jquery
+            , layer = layui.layer;
 
+        $('#getPdf .layui-btn').on('click', function () {
+            layer.open({
+                type: 2
+                , title: 'is test'
+                , closeBtn: true
+                , id: 1 //防止重复弹出
+                , content: "/layui/getPdf"
+                , shade: 0 //不显示遮罩
+                , yes: function () {
+                    layer.closeAll();
+                }
             });
-        })
-    </script>
+
+        });
+
+
+        $('#getIp2 .layui-btn').on('click', function () {
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json",
+                url: "/layui/testArray",
+                data: JSON.stringify([11, 22, 33, 44, 55, 66]),
+                success: function (res) {
+                    //console.log(res)
+                    layer.msg(JSON.stringify(res));
+                },
+                error: function (error) {
+                    //console.log(error)
+                    layer.msg(JSON.stringify(error));
+                }
+            });
+        });
+        $('#getIp1 .layui-btn').on('click', function () {
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json",
+                url: "/layui/testGetIp",
+                data: JSON.stringify([11, 22, 33, 44, 55, 66]),
+                success: function (res) {
+                    layer.msg(JSON.stringify(res));
+                },
+                error: function (error) {
+                    layer.msg(JSON.stringify(error));
+                }
+            });
+        });
+        $('#layerDemo .layui-btn').on('click', function () {
+            //这个utl中只需要把图片流输入到HttpServletResponse输出流中即可
+            /*
+                ServletOutputStream outputStream = null
+                try{
+                    outputStream = response.getOutputStream()
+                        ||||||||业务代码
+                    //我这里场景是在生成二维码图片后把图片返回给前端，所以这里用了zxing javase的依赖包里的MatrixToImageWriter工具类
+                    //你可以用其他方式写到流中去
+                    MatrixToImageWriter.writeToStream(bitMatrix,picForm,outputStream)
+                }catch (Throwable t) {
+                    ExceptionManager.logException(sess,t)
+                    return ResponseMessageFactory.error(sess,t.getMessage())
+                }finally{
+                    if(outputStream){
+                        outputStream.flush()
+                        outputStream.close()
+                    }
+                }
+            */
+            var shipmentId = 1209;
+            var html = "<img src='http://127.0.0.1:9001/api/qrcode/generateQRCode/" + shipmentId + "'/>"
+            layer.open({
+                type: 1
+                , title: 'is test'
+                , closeBtn: false
+                , offset: 'auto'
+                , id: shipmentId //防止重复弹出
+                , content: html
+                , btn: '关闭全部'
+                , btnAlign: 'c' //按钮居中
+                , shade: 0 //不显示遮罩
+                , yes: function () {
+                    layer.closeAll();
+                }
+            });
+
+        });
+    })
+</script>
 </body>
 </html>

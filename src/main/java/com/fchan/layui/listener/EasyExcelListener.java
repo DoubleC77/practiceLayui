@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fchan.layui.entity.EasyExcelTest;
 import lombok.extern.slf4j.Slf4j;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -53,14 +54,15 @@ public class EasyExcelListener extends AnalysisEventListener<EasyExcelTest> {
 
     /**
      * 解析每一条数据的时候都会进这个方法
+     *
      * @param data
      * @param context
      */
     @Override
     public void invoke(EasyExcelTest data, AnalysisContext context) {
         try {
-            log.info("解析到一条数据:{}",JSON.writeValueAsString(data));
-            if(list.size() >= BATCH_COUNT){
+            log.info("解析到一条数据:{}", JSON.writeValueAsString(data));
+            if (list.size() >= BATCH_COUNT) {
                 //存储数据库
                 saveData();
 
@@ -74,11 +76,12 @@ public class EasyExcelListener extends AnalysisEventListener<EasyExcelTest> {
 
     /**
      * 解析完成的时候也要保存一遍数据库
+     *
      * @param context
      */
     @Override
     public void doAfterAllAnalysed(AnalysisContext context) {
-        if(list.size() > 0){
+        if (list.size() > 0) {
             //存数据库
             saveData();
         }
@@ -87,13 +90,14 @@ public class EasyExcelListener extends AnalysisEventListener<EasyExcelTest> {
     /**
      * 只会第一次读取到表头的时候进入这个方法
      * 这里读取到的是真实的传入的excel中的表头
+     *
      * @param headMap
      * @param context
      */
     @Override
     public void invokeHeadMap(Map<Integer, String> headMap, AnalysisContext context) {
         try {
-            log.info("读取到的表头:{}",JSON.writeValueAsString(headMap));
+            log.info("读取到的表头:{}", JSON.writeValueAsString(headMap));
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

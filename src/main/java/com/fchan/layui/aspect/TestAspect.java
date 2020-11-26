@@ -10,53 +10,67 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
 @Slf4j
+
 public class TestAspect {
 
     private static ObjectMapper JSON = new ObjectMapper();
 
     @Pointcut(value = "execution(* com.fchan.layui.service.SpringAopTestService.insert(..))")
-    public void insertPointcut(){}
+    public void insertPointcut() {
+    }
+
+    @Pointcut(value = "execution(* com.fchan.layui.service.SpringAopTestService.testMethodInSelf(..))")
+    public void testMethodInSelfAspect() {
+    }
+
+
+    @Before("testMethodInSelfAspect()")
+    public void BeforeTestMethodInSelfAspect() {
+        System.out.println("成功进入被代理的方法中this调用的方法");
+    }
 
     /**
      * 获取到 before 通知时的方法入参
+     *
      * @param entity
      * @return
      */
     @Before("insertPointcut() && args(entity)")
-    public void beforeInsert(AopTestEntity entity){
-        if(!"hello".equals(CurrentUserHolder.get())){
+    public void beforeInsert(AopTestEntity entity) {
+        if (!"hello".equals(CurrentUserHolder.get())) {
             throw new RuntimeException("用户不对");
         }
     }
 
     @Pointcut("@annotation(CheckUser)")
-    public void CheckUser(){
+    public void CheckUser() {
 
     }
 
     @After(value = "CheckUser()")
-    public void afterDelete(JoinPoint joinPoint){
-        log.info("删除一条数据之后:{}",joinPoint.getArgs());
+    public void afterDelete(JoinPoint joinPoint) {
+        log.info("删除一条数据之后:{}", joinPoint.getArgs());
     }
 
     /**
      * returning = "returnValue"要和方法的形参变量名returnValue一致
+     *
      * @param returnValue
      * @throws JsonProcessingException
      */
-    @AfterReturning(value = "insertPointcut()",returning = "returnValue")
+    @AfterReturning(value = "insertPointcut()", returning = "returnValue")
     public void testAfterReturning(Object returnValue) throws JsonProcessingException {
 
-        AopTestEntity aopTestEntity = JSON.readValue(returnValue.toString(),AopTestEntity.class);
+        AopTestEntity aopTestEntity = JSON.readValue(returnValue.toString(), AopTestEntity.class);
         aopTestEntity.setName("被修改了的名字");
-        log.info("AfterReturning中获取到的返回的值:{}",returnValue);
+        log.info("AfterReturning中获取到的返回的值:{}", returnValue);
     }
-
 
 
     @Around(value = "insertPointcut()")
@@ -64,21 +78,21 @@ public class TestAspect {
         log.info("方法执行前");
         //可以获取到方法执行后的参数
         Object returnValue = proceedingJoinPoint.proceed(proceedingJoinPoint.getArgs());
-        AopTestEntity aopTestEntity = JSON.readValue(returnValue.toString(),AopTestEntity.class);
+        AopTestEntity aopTestEntity = JSON.readValue(returnValue.toString(), AopTestEntity.class);
         aopTestEntity.setName("被修改了的名字");
         log.info("方法执行后");
         return JSON.writeValueAsString(aopTestEntity);
     }
 
 
-    @AfterThrowing(value = "insertPointcut()",throwing = "e")
-    public void testAfterThrowing(Throwable e){
-        log.error("捕获了异常:{}",e.getMessage());
+    @AfterThrowing(value = "insertPointcut()", throwing = "e")
+    public void testAfterThrowing(Throwable e) {
+        log.error("捕获了异常:{}", e.getMessage());
     }
 
     @After(value = "insertPointcut()")
-    public void afterWithAround(JoinPoint joinPoint){
-        log.info("After和Around比较优先级:{}",joinPoint.getArgs());
+    public void afterWithAround(JoinPoint joinPoint) {
+        log.info("After和Around比较优先级:{}", joinPoint.getArgs());
     }
 
 
@@ -86,7 +100,8 @@ public class TestAspect {
      * 匹配AOP对象的目标对象为指定类型的方法,即 SpringAopTestService 的aop代理对象的方法
      */
     @Pointcut(value = "this(com.fchan.layui.service.SpringAopTestService)")
-    public void testThis(){}
+    public void testThis() {
+    }
 
     /*@Before(value = "testThis()")
     public void testThisBefore(){
@@ -97,11 +112,12 @@ public class TestAspect {
      * 匹配实现 SpringAopTestInterface 接口的目标对象(而不是aop代理后的对象)的方法,这里即SpringAopTestService的方法
      */
     @Pointcut(value = "target(com.fchan.layui.service.SpringAopTestInterface)")
-    public void testTarget(){}
+    public void testTarget() {
+    }
 
 
     @Before(value = "testTarget()")
-    public void testTargetBefore(){
+    public void testTargetBefore() {
         System.out.println("使用Before拦截了实现这个 SpringAopTestInterface 接口的类里的所有方法");
     }
 
@@ -116,53 +132,69 @@ public class TestAspect {
      * 匹配任何以find开头而且只有一个Long参数的方法
      */
     @Pointcut("execution(* *..find*(Long))")
-    public void testArgs(){}
+    public void testArgs() {
+    }
 
 
     /**
      * 匹配任何只有一个Long参数的方法
      */
     @Pointcut("args(Long)")
-    public void testArgOne(){}
+    public void testArgOne() {
+    }
 
     /**
      * 匹配任何以find开头的而且第一个参数为Long型的方法
      */
     @Pointcut("execution( * *..find*(Long, ..))")
-    public void testArgsOne(){}
+    public void testArgsOne() {
+    }
 
 
     /**
      * 匹配第一个参数为Long型的所有方法
      */
     @Pointcut("args(Long, ..)")
-    public void testArgFirstOne(){}
+    public void testArgFirstOne() {
+    }
 
 
     /**
      * 匹配路径在com.fchan.layui.service下的SpringAopTestService中只有一个Long型参数的所有方法
      */
     @Pointcut("args(Long) && within(com.fchan.layui.service.SpringAopTestService))")
-    public void testArgAndPackage(){}
+    public void testArgAndPackage() {
+    }
 
     /**
      * 匹配路径在com.fchan.layui.service下的SpringAopTestService中返回值为String的所有方法
      */
     @Pointcut("execution(String com.fchan.layui.service.SpringAopTestService.*(..)))")
-    public void testArgAndPackageOnlyReturnString(){}
+    public void testArgAndPackageOnlyReturnString() {
+    }
 
     /**
      * 匹配路径在com.fchan.layui.service下的SpringAopTestService中无参并且返回值为String的所有方法
      */
     @Pointcut("execution(String com.fchan.layui.service.SpringAopTestService.*()))")
-    public void testArgOnlyReturnStringAndVoid(){}
+    public void testArgOnlyReturnStringAndVoid() {
+    }
 
 
     /**
      * 匹配路径在com.fchan.layui.service下的SpringAopTestService中方法只有一个形参并且类型为Long并且返回值为String的所有方法
      */
     @Pointcut("execution(String com.fchan.layui.service.SpringAopTestService.*(Long)))")
-    public void testArgOnlyReturnStringAndLong(){}
+    public void testArgOnlyReturnStringAndLong() {
+    }
+
+
+    /**
+     * 要判断传入的参数类型是Map或者List时需要写包名全路径
+     */
+    @Pointcut("execution(String com.fchan.layui.service.SpringAopTestService.*(java.util.Map)))")
+    public void testArgOnlyReturnStringAndMap() {
+    }
 
 
 }

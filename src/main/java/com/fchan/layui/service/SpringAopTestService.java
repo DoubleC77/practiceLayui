@@ -10,23 +10,28 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
-public class SpringAopTestService implements SpringAopTestInterface{
+public class SpringAopTestService implements SpringAopTestInterface {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     public String insert(AopTestEntity aopTestEntity) throws JsonProcessingException {
         String result = objectMapper.writeValueAsString(aopTestEntity);
-        log.info("插入一条数据:{}",result);
-        if(!"hello".equals(CurrentUserHolder.get())){
+        log.info("插入一条数据:{}", result);
+        if (!"hello".equals(CurrentUserHolder.get())) {
             throw new RuntimeException("用户不对");
         }
+        testMethodInSelf();
         return result;
+    }
+
+    public void testMethodInSelf() {
+        System.out.println("这个方式是this调用的");
     }
 
     @CheckUser
     public void delete(AopTestEntity aopTestEntity) throws JsonProcessingException {
         String result = objectMapper.writeValueAsString(aopTestEntity);
-        log.info("删除一条数据:{}",result);
+        log.info("删除一条数据:{}", result);
         throw new RuntimeException("测试");
     }
 

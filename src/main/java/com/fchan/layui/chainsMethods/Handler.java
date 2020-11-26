@@ -12,9 +12,9 @@ public abstract class Handler {
         this.successor = successor;
     }
 
-    public void handlerProcess(){
+    public void handlerProcess() {
         execution();
-        if(null != successor){
+        if (null != successor) {
             successor.handlerProcess();
         }
     }

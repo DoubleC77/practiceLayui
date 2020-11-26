@@ -2,7 +2,7 @@ package com.fchan.layui.chainsMethods;
 
 public class Client {
 
-    static class  HandlerA extends Handler{
+    static class HandlerA extends Handler {
 
         @Override
         public void execution() {
@@ -10,7 +10,7 @@ public class Client {
         }
     }
 
-    static class  HandlerB extends Handler{
+    static class HandlerB extends Handler {
 
         @Override
         public void execution() {
@@ -18,7 +18,7 @@ public class Client {
         }
     }
 
-    static class  HandlerC extends Handler{
+    static class HandlerC extends Handler {
 
         @Override
         public void execution() {
@@ -37,7 +37,6 @@ public class Client {
 
         handlerA.handlerProcess();
     }
-
 
 
 }

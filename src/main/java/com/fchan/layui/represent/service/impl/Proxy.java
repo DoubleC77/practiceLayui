@@ -14,9 +14,9 @@ public class Proxy implements Subject {
 
     @Override
     public void print() {
-      log.info("代理对象开始干活了");
-      //被代理的对象处理业务
-      realSubject.print();
-      log.info("代理对象干活结束");
+        log.info("代理对象开始干活了");
+        //被代理的对象处理业务
+        realSubject.print();
+        log.info("代理对象干活结束");
     }
 }

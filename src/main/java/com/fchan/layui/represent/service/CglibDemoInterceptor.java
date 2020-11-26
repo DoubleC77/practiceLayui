@@ -11,7 +11,7 @@ public class CglibDemoInterceptor implements MethodInterceptor {
         System.out.println("cglib represent before");
         Object result = null;
         try {
-            result = methodProxy.invokeSuper(o,objects);
+            result = methodProxy.invokeSuper(o, objects);
         } catch (Throwable throwable) {
             throwable.printStackTrace();
             throw throwable;

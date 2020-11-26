@@ -29,7 +29,7 @@ public class JdkProxySubject implements InvocationHandler {
 
         try {
             //利用反射调用目标对象的方法
-            result = method.invoke(realSubject,args);
+            result = method.invoke(realSubject, args);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
             //代理类不是真正处理的类,这里接着把异常往外面抛

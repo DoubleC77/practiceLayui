@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public class TestJobDetailService {
 
 
-    public String doJob(){
+    public String doJob() {
         System.out.println("开始处理业务了");
         return LocalDateTime.now().toString();
     }
