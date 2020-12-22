@@ -5,8 +5,31 @@
     <title>Title</title>
     <link rel="stylesheet" href="/layui/css/layui.css">
     <script src="/layui/layui.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=NEGzO3yltGhOUFnwtGtwjCQOqmyRGrQo"></script>
+    <!-- 如果需要拖拽鼠标进行操作，可引入以下js文件 -->
+    <script type="text/javascript" src="http://api.map.baidu.com/library/RectangleZoom/1.2/src/RectangleZoom_min.js"></script>
+    <style type="text/css">
+        html,body {
+            width: 100%;
+            height: 100%
+        }
+
+        #baiduMap {
+            width: 50%;
+            height: 50%;
+            margin:0 auto;
+        }
+    </style>
 </head>
 <body>
+
+
+<button onclick="createMap()">显示地图</button>
+<div id="createMap">
+    <button data-method="confirmTrans" class="layui-btn">显示地图</button>
+</div>
+
+
 <div class="site-demo-button" id="layerDemo" style="margin-bottom: 0;">
     <button data-method="confirmTrans" class="layui-btn">配置一个透明的询问框</button>
 </div>
@@ -14,7 +37,7 @@
 <script language="JavaScript">
     alert(JSON.stringify(returnCitySN));
 </script>-->
-<iframe
+
 <div id="getIp1">
     <button data-method="confirmTrans" class="layui-btn">获取ip方式1</button>
 </div>
@@ -24,7 +47,20 @@
 <div id="getPdf">
     <button data-method="confirmTrans" class="layui-btn">预览pdf</button>
 </div>
+
 <script>
+
+    function createMap(){
+        var map = new BMap.Map("baiduMap");//创建百度地图实例
+        var point = new BMap.Point(113.943062,22.54069);//深圳大学的经纬度坐标
+        map.centerAndZoom(point, 20);//将地图中心移动到我们指定的地点
+
+        var myIcon = new BMap.Icon("img/smile.png", new BMap.Size(25, 23));
+        var marker = new BMap.Marker(point,{icon: myIcon});
+        map.addOverlay(marker);//在我们指定的地点显示一个笑脸
+        map.enableScrollWheelZoom(true);
+    }
+
     layui.use(['layer'], function () {
         var $ = layui.jquery
             , layer = layui.layer;
@@ -115,6 +151,55 @@
             });
 
         });
+
+
+        $('#createMap .layui-btn').on('click', function () {
+
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json",
+                url: "/layui/createMap",
+                data: JSON.stringify({code:111,id:1}),
+                success: function (res) {
+                    layer.open({
+                        type: 1
+                        , title: 'is test'
+                        , closeBtn: false
+                        , area : ['500px']
+                        , id: 1 //防止重复弹出
+                        , content: '<div class="mapContainer"><div id="baiduMap" style="width: 500px;height: 500px;"></div></div>'
+                        , btn: '关闭全部'
+                        , btnAlign: 'c' //按钮居中
+                        , shade: 0 //不显示遮罩
+                        , yes: function () {
+                            layer.closeAll();
+                        },
+                        success: function(layero, index) {
+                            var map = new BMap.Map("baiduMap");//创建百度地图实例
+                            var point = new BMap.Point(113.943062,22.54069);//深圳大学的经纬度坐标
+                            map.centerAndZoom(point, 20);//将地图中心移动到我们指定的地点
+
+                            var myIcon = new BMap.Icon("img/smile.png", new BMap.Size(25, 23));
+                            var marker = new BMap.Marker(point,{icon: myIcon});
+                            map.addOverlay(marker);//在我们指定的地点显示一个笑脸
+                            map.enableScrollWheelZoom(true);
+                        }
+                    });
+
+                    //console.log(res)
+                    layer.msg(JSON.stringify(res));
+
+                },
+                error: function (error) {
+                    //console.log(error)
+                    layer.msg(JSON.stringify(error));
+                }
+            });
+
+
+        });
+
     })
 </script>
 </body>

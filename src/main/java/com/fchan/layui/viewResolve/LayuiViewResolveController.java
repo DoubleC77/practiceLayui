@@ -33,4 +33,8 @@ public class LayuiViewResolveController {
         return "html/layuiPopQRCodeImageByStreamWithLocal";
     }
 
+
+    @GetMapping("baiduMap")
+    String baiduMap(){return "html/BaiDuMap";}
+
 }

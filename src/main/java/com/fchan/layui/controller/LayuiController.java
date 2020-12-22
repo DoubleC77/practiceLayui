@@ -285,4 +285,14 @@ public class LayuiController {
     }
 
 
+    @PostMapping("createMap")
+    @ResponseBody
+    Map createMap(@RequestBody Map requestBody){
+        Map<String,String> map = new HashMap<>();
+        map.put("lon","116.313");
+        map.put("lat","39.978129");
+        return map;
+    }
+
+
 }
